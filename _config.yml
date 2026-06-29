@@ -1,0 +1,103 @@
+# ===========================================================================
+# Hexo 站点配置 · Levi-JQ.github.io
+# 文档: https://hexo.io/docs/configuration.html
+# ===========================================================================
+
+# ----- 站点 -----
+title: Levi-JQ's Blog
+subtitle: ''
+description: 'AI Infra · 推理优化 · 系统工程'
+keywords: AI Infra,推理优化,LLM,系统工程
+author: Levi-JQ
+language: zh-CN
+timezone: Asia/Shanghai
+
+# ----- URL -----
+# 顶级用户站点 <用户名>.github.io → root: /
+# 若改用子路径仓库（如 my-blog），root 需改为 /my-blog/（末尾斜杠不能少，否则 CSS 全 404）
+url: https://Levi-JQ.github.io
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# ----- 目录 -----
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# ----- 写作 -----
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+# 代码高亮：Hexo 在构建期用 highlight.js 高亮（产出 <figure class="highlight">），Fluid 提供配套 CSS
+syntax_highlighter: highlight.js
+
+# ----- 主页 / 分页 -----
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+per_page: 10
+pagination_dir: page
+
+# ----- 分类 / 标签 -----
+default_category: uncategorized
+category_map:
+tag_map:
+
+# ----- 元数据 / 日期 -----
+meta_generator: true
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# ----- 主题 -----
+theme: fluid
+
+# ----- Markdown 渲染器 -----
+# 用 hexo-renderer-markdown-it 替代默认 marked，并挂 @traptitech/markdown-it-katex，
+# 在构建期把 $...$ / $$...$$ 服务端渲染成 KaTeX HTML（样式表在 _config.fluid.yml 的 custom_css 引入）
+markdown:
+  preset: 'default'
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: false
+    linkify: true
+    typographer: true
+    quotes: '“”‘’'
+  plugins:
+    - '@traptitech/markdown-it-katex'
+  anchors:
+    level: 2
+    collisionSuffix: ''
+    permalink: false
+    permalinkClass: 'header-anchor'
+    permalinkSide: 'left'
+    permalinkSymbol: '¶'
+
+# ----- 站点地图 -----
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
+
+# ----- 部署 -----
+# 方式 A（hexo-deployer-git 直推产物）时使用；方式 B（GitHub Actions 自动部署）时忽略此项
+deploy:
+  type: git
+  repo: https://github.com/Levi-JQ/Levi-JQ.github.io.git
+  branch: main

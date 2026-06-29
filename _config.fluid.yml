@@ -1,0 +1,81 @@
+# ===========================================================================
+# Fluid 主题覆盖配置 · Levi-JQ.github.io
+# 与主题默认配置 node_modules/hexo-theme-fluid/_config.yml 深合并，这里只写要覆盖的项。
+# 其余功能（暗色模式/懒加载/代码复制/图片放大/TOC/进度条/锚点/打字机/本地搜索）主题默认已开启。
+# 完整配置见: https://hexo.fluid-dev.com/docs/guide/
+# ===========================================================================
+
+# 浏览器标签图标（换自己的图时把文件放到 source/img/ 下再改路径）
+favicon: /img/fluid.png
+apple_touch_icon: /img/fluid.png
+
+# 导航栏左侧标题
+navbar:
+  blog_title: "Levi-JQ's Blog"
+
+# 首页：Banner 大图 + 打字机副标题
+index:
+  banner_img: /img/banner.svg
+  banner_img_height: 100
+  banner_mask_alpha: 0.3
+  slogan:
+    text: "记录 AI Infra · 推理优化 · 系统工程的所学所思"
+
+# 文章页：Banner + 代码高亮由 Fluid 默认处理；数学用服务端 KaTeX（关闭 Fluid 自带 math）
+post:
+  banner_img: /img/banner.svg
+  banner_img_height: 70
+  banner_mask_alpha: 0.3
+  math:
+    enable: false
+  # 评论：giscus（基于 GitHub Discussions）。启用步骤见文末 giscus 注释
+  comments:
+    enable: true
+    type: giscus
+
+# 关于页（头部 name/intro/icons 来自此处，正文来自 source/about/index.md）
+about:
+  banner_img: /img/banner.svg
+  avatar: /img/avatar.png
+  name: ""
+  intro: "AI Infra 工程师 · 推理优化与分布式系统"
+  icons:
+    - { class: "iconfont icon-github-fill", link: "https://github.com/Levi-JQ", tip: "GitHub" }
+
+# 归档 / 分类 / 标签 页 Banner（与首页一致）
+archive:
+  banner_img: /img/banner.svg
+category:
+  banner_img: /img/banner.svg
+tag:
+  banner_img: /img/banner.svg
+
+# 全局自定义 CSS：本地 KaTeX 样式（服务端渲染数学公式所需）
+custom_css:
+  - /css/katex.min.css
+
+# 全局自定义 JS：mermaid 流程图（客户端渲染 ```mermaid 代码块）
+custom_js:
+  - https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js
+  - /js/mermaid-init.js
+
+# ===========================================================================
+# giscus 评论配置
+# 启用步骤（推送仓库到 GitHub 后做）：
+#   1. 仓库 Settings → General → Features 勾选 Discussions
+#   2. 打开 https://giscus.app ，repo 填 Levi-JQ/Levi-JQ.github.io，mapping 选 pathname，
+#      把生成的 data-repo-id 和 data-category-id 填到下面两项
+#   3. git push，文章页底部即出现评论区
+# ===========================================================================
+giscus:
+  repo: Levi-JQ/Levi-JQ.github.io
+  repo-id:  # ← 填 giscus.app 给的 data-repo-id
+  category: Announcements
+  category-id:  # ← 填 giscus.app 给的 data-category-id
+  theme-light: light
+  theme-dark: dark
+  mapping: pathname
+  reactions-enabled: 1
+  emit-metadata: 0
+  input-position: top
+  lang: zh-CN
