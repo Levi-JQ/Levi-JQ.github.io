@@ -32,6 +32,12 @@ post:
   comments:
     enable: true
     type: giscus
+  # 文章阅读量计数（busuanzi，无需账号；本地预览数值偏大属正常，部署后准确）
+  # 注意路径是 post.meta.views（与主题模板一致），其余 meta 项（日期/字数/阅读时长）由主题默认开启并深度合并保留
+  meta:
+    views:
+      enable: true
+      source: "busuanzi"
 
 # 关于页（头部 name/intro/icons 来自此处，正文来自 source/about/index.md）
 about:
@@ -49,6 +55,12 @@ category:
   banner_img: /img/banner.svg
 tag:
   banner_img: /img/banner.svg
+
+# 页脚：站点 PV/UV 计数（busuanzi，无需账号；与默认页脚内容深度合并，不覆盖 Hexo/Fluid 链接）
+footer:
+  statistics:
+    enable: true
+    source: "busuanzi"
 
 # 全局自定义 CSS：本地 KaTeX 样式（服务端渲染数学公式所需）
 custom_css:

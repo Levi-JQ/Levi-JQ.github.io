@@ -72,7 +72,7 @@ $$C(\text{AllReduce}(X)) \;=\; \text{AllGather}\big(C(\text{ReduceScatter}(X))\b
 
 等式一成立，把它们前移到分片上就是白赚：每卡只处理 $1/\text{tp}$ 的 token，计算量直接降到 $1/\text{tp}$；同时 AllGather 搬运的是更小、更低比特的张量。唯一要注意的是浮点累加顺序变了，数值上会有极小偏差，训推一致场景需要评估一下。
 
-> 原始报告把这个性质称作**「列向无关」**（column-independent），并给出了严格的定义与证明，想看完整推导可以翻原文。
+> 原始报告把这个性质称作「列向无关」（column-independent），并给出了严格的定义与证明，想看完整推导可以翻原文。
 
 ## FC1 和 SP 的区别
 
