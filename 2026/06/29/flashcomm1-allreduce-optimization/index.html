@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://levi-jq.github.io/img/flashcomm1-allreduce-optimization/fc1-mla.png">
 <meta property="og:image" content="https://levi-jq.github.io/img/flashcomm1-allreduce-optimization/fc1-moe.png">
 <meta property="article:published_time" content="2026-06-29T10:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-30T03:43:53.073Z">
+<meta property="article:modified_time" content="2026-06-30T07:13:11.888Z">
 <meta property="article:author" content="Levi-JQ">
 <meta property="article:tag" content="AllReduce">
 <meta property="article:tag" content="Ascend">
@@ -40,6 +40,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://levi-jq.github.io/img/flashcomm1-allreduce-optimization/fc1-mla.png">
   
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>FlashComm1：把 AllReduce 拆开、推后 - Levi-JQ&#39;s Blog</title>
@@ -356,6 +358,15 @@
 
     
     
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+
+      
+    
   </div>
 
 
@@ -458,7 +469,7 @@
 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="mopen">(</span><span class="mord text"><span class="mord">AllReduce</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mclose">))</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1.2em;vertical-align:-0.35em;"></span><span class="mord text"><span class="mord">AllGather</span></span><span class="mord"><span class="delimsizing size1">(</span></span><span class="mord mathnormal" style="margin-right:0.0715em;">C</span><span class="mopen">(</span><span class="mord text"><span class="mord">ReduceScatter</span></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.0785em;">X</span><span class="mclose">))</span><span class="mord"><span class="delimsizing size1">)</span></span></span></span></span></span></p>
 <p>等式一成立，把它们前移到分片上就是白赚：每卡只处理 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mtext>tp</mtext></mrow><annotation encoding="application/x-tex">1/\text{tp}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord text"><span class="mord">tp</span></span></span></span></span> 的 token，计算量直接降到 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi mathvariant="normal">/</mi><mtext>tp</mtext></mrow><annotation encoding="application/x-tex">1/\text{tp}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1/</span><span class="mord text"><span class="mord">tp</span></span></span></span></span>；同时 AllGather 搬运的是更小、更低比特的张量。唯一要注意的是浮点累加顺序变了，数值上会有极小偏差，训推一致场景需要评估一下。</p>
 <blockquote>
-<p>原始报告把这个性质称作**「列向无关」**（column-independent），并给出了严格的定义与证明，想看完整推导可以翻原文。</p>
+<p>原始报告把这个性质称作「列向无关」（column-independent），并给出了严格的定义与证明，想看完整推导可以翻原文。</p>
 </blockquote>
 <h2 id="FC1-和-SP-的区别">FC1 和 SP 的区别</h2>
 <p>先说清 SP 是什么。<strong>SP（Sequence Parallelism）是一种并行方式</strong>，最早出自 Megatron-LM（Korthikanti et al., 2022）。在普通张量并行里，LayerNorm、Dropout 这类算子并不切分权重，于是在每张卡上都被重复算一遍、重复存一份。SP 的做法是把它们沿<strong>序列维度</strong>切开，每卡只处理一段 token——初衷是<strong>省激活显存</strong>（训练长序列时尤为关键），副产品是顺带减少了 LayerNorm 的冗余计算。通信上，原来 TP 末尾的 AllReduce 被替换成 <code>ReduceScatter + AllGather</code>，LayerNorm 才得以跑在序列分片上。SP 是个通用技术，任何 Transformer 结构都能用，并不局限于某一类模型。</p>
@@ -791,6 +802,32 @@
     </div>
   
   
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
   
 </div>
 
@@ -999,6 +1036,8 @@
   <script>Fluid.plugins.imageCaption();</script>
 
   <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
 
 
 
