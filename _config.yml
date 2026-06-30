@@ -99,5 +99,5 @@ baidusitemap:
 # 方式 A（hexo-deployer-git 直推产物）时使用；方式 B（GitHub Actions 自动部署）时忽略此项
 deploy:
   type: git
-  repo: https://github.com/Levi-JQ/Levi-JQ.github.io.git
+  repo: git@github.com:Levi-JQ/Levi-JQ.github.io.git
   branch: main
