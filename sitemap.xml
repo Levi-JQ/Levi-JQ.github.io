@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://levi-jq.github.io/2026/07/01/flashcomm2-storage-for-comm/</loc>
+    
+    <lastmod>2026-07-01</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://levi-jq.github.io/2026/06/29/flashcomm1-allreduce-optimization/</loc>
     
     <lastmod>2026-07-01</lastmod>
@@ -65,6 +74,13 @@
   
   <url>
     <loc>https://levi-jq.github.io/tags/Ascend/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://levi-jq.github.io/tags/All2All/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
